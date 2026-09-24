@@ -14,7 +14,6 @@
 // Settings dialog
 #define IDD_SETTINGS                    3000
 #define IDC_CHK_AUTOSTART_WINDOWS       3001
-#define IDC_CHK_START_IN_TRAY           3002
 #define IDC_CHK_KEEP_DISPLAY_ON         3003
 #define IDC_RADIO_DURATION_HOURS        3004
 #define IDC_RADIO_DURATION_UNTIL        3005

@@ -13,8 +13,7 @@ minute) as a proper background tray app with persistent settings.
 - Tray context menu: status, start/stop, settings, exit.
 - Settings dialog (persisted in `%APPDATA%\KeepAwake\settings.ini`, no registry involved):
   - Start automatically with Windows (creates a shortcut in the Startup folder).
-  - Start minimized to tray.
-  - Also keep the display on (`ES_DISPLAY_REQUIRED`).
+  - Also keep the display on (`ES_DISPLAY_REQUIRED`), not just prevent sleep.
   - Duration: either "N hours after start" or "until HH:MM".
 - Starts keeping the machine awake immediately on launch, using the last
   saved duration setting.

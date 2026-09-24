@@ -180,7 +180,6 @@ namespace
     void LoadSettingsIntoDialog(HWND hDlg)
     {
         CheckDlgButton(hDlg, IDC_CHK_AUTOSTART_WINDOWS, g_settings.autostartWithWindows ? BST_CHECKED : BST_UNCHECKED);
-        CheckDlgButton(hDlg, IDC_CHK_START_IN_TRAY, g_settings.startInTray ? BST_CHECKED : BST_UNCHECKED);
         CheckDlgButton(hDlg, IDC_CHK_KEEP_DISPLAY_ON, g_settings.keepDisplayOn ? BST_CHECKED : BST_UNCHECKED);
 
         CheckRadioButton(hDlg, IDC_RADIO_DURATION_HOURS, IDC_RADIO_DURATION_UNTIL,
@@ -201,7 +200,6 @@ namespace
     void SaveSettingsFromDialog(HWND hDlg)
     {
         g_settings.autostartWithWindows = IsDlgButtonChecked(hDlg, IDC_CHK_AUTOSTART_WINDOWS) == BST_CHECKED;
-        g_settings.startInTray = IsDlgButtonChecked(hDlg, IDC_CHK_START_IN_TRAY) == BST_CHECKED;
         g_settings.keepDisplayOn = IsDlgButtonChecked(hDlg, IDC_CHK_KEEP_DISPLAY_ON) == BST_CHECKED;
 
         g_settings.durationMode = (IsDlgButtonChecked(hDlg, IDC_RADIO_DURATION_HOURS) == BST_CHECKED)

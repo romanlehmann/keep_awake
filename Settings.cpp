@@ -91,7 +91,6 @@ void Settings::Load()
     };
 
     autostartWithWindows = getBool(L"AutostartWithWindows", false);
-    startInTray = getBool(L"StartInTray", true);
     keepDisplayOn = getBool(L"KeepDisplayOn", false);
     durationMode = static_cast<DurationMode>(getInt(L"DurationMode", 0));
     durationHours = getInt(L"DurationHours", 10);
@@ -107,7 +106,6 @@ void Settings::Save() const
     }
 
     file << L"AutostartWithWindows=" << (autostartWithWindows ? 1 : 0) << L"\n";
-    file << L"StartInTray=" << (startInTray ? 1 : 0) << L"\n";
     file << L"KeepDisplayOn=" << (keepDisplayOn ? 1 : 0) << L"\n";
     file << L"DurationMode=" << static_cast<int>(durationMode) << L"\n";
     file << L"DurationHours=" << durationHours << L"\n";

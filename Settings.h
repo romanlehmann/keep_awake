@@ -12,7 +12,6 @@ enum class DurationMode : int
 struct Settings
 {
     bool autostartWithWindows = false;
-    bool startInTray = true;
     bool keepDisplayOn = false;
     DurationMode durationMode = DurationMode::Hours;
     int durationHours = 10;          // Standard ~ 580 Minuten wie im bisherigen Skript
