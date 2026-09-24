@@ -1,7 +1,7 @@
 CXX := g++
 WINDRES := windres
 CXXFLAGS := -std=c++17 -O2 -municode -Wall -DUNICODE -D_UNICODE
-LDFLAGS := -municode -mwindows -static -static-libgcc -static-libstdc++
+LDFLAGS := -municode -mwindows
 LIBS := -luser32 -lshell32 -lgdi32 -ladvapi32 -lkernel32 -lole32 -luuid
 
 TARGET := KeepAwake.exe

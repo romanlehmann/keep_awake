@@ -28,7 +28,12 @@ installed via `winget install --id BrechtSanders.WinLibs.POSIX.UCRT`).
 mingw32-make
 ```
 
-Produces `KeepAwake.exe` (statically linked, no extra DLLs required).
+Produces `KeepAwake.exe`, dynamically linked against `libgcc_s_seh-1.dll` and
+`libstdc++-6.dll` (both included in this repo, must sit next to the exe).
+A fully static build (`-static -static-libgcc -static-libstdc++`) also works,
+but Windows Defender's ML heuristic (`Trojan:Win32/Bearfoos.B!ml`) reliably
+flags statically linked MinGW binaries as a false positive; the dynamic
+build avoids that.
 
 ## Autostart
 
