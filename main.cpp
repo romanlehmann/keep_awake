@@ -190,6 +190,14 @@ namespace
         SetDlgItemTextW(hDlg, IDC_EDIT_UNTIL_TIME, g_settings.untilTime.c_str());
     }
 
+    // Aktiviert nur das Eingabefeld, das zum aktuell gewaehlten Laufzeit-Modus gehoert
+    void UpdateDurationControlsEnabledState(HWND hDlg)
+    {
+        bool hoursMode = IsDlgButtonChecked(hDlg, IDC_RADIO_DURATION_HOURS) == BST_CHECKED;
+        EnableWindow(GetDlgItem(hDlg, IDC_EDIT_HOURS), hoursMode);
+        EnableWindow(GetDlgItem(hDlg, IDC_EDIT_UNTIL_TIME), !hoursMode);
+    }
+
     void SaveSettingsFromDialog(HWND hDlg)
     {
         g_settings.autostartWithWindows = IsDlgButtonChecked(hDlg, IDC_CHK_AUTOSTART_WINDOWS) == BST_CHECKED;
@@ -224,11 +232,23 @@ namespace
         {
         case WM_INITDIALOG:
             LoadSettingsIntoDialog(hDlg);
+            UpdateDurationControlsEnabledState(hDlg);
             return TRUE;
 
         case WM_COMMAND:
             switch (LOWORD(wParam))
             {
+            case IDC_RADIO_DURATION_HOURS:
+            case IDC_RADIO_DURATION_UNTIL:
+                // Nicht auf das automatische Win32-Gruppenverhalten allein verlassen: den
+                // Radiobutton-Status hier deterministisch selbst setzen und die Eingabefelder
+                // passend umschalten (behebt den Fall, dass "Fuer" haengen bleibt).
+                if (HIWORD(wParam) == BN_CLICKED)
+                {
+                    CheckRadioButton(hDlg, IDC_RADIO_DURATION_HOURS, IDC_RADIO_DURATION_UNTIL, LOWORD(wParam));
+                    UpdateDurationControlsEnabledState(hDlg);
+                }
+                return TRUE;
             case IDC_BTN_OK:
                 SaveSettingsFromDialog(hDlg);
                 // Laeuft der Vorgang bereits, Endzeit sofort an neue Einstellungen anpassen
@@ -366,11 +386,12 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int)
     wc.hInstance = hInstance;
     wc.lpszClassName = kWindowClassName;
     wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_MAIN_ICON));
-    RegisterClassExW(&wc);
+    ATOM atom = RegisterClassExW(&wc);
 
     // Unsichtbares Hauptfenster: dient nur als Nachrichtenziel fuer Tray/Timer, taucht nicht in der Taskleiste auf
     g_hMainWnd = CreateWindowExW(0, kWindowClassName, kAppTitle, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, nullptr, nullptr, hInstance, nullptr);
+    (void)atom;
 
     g_nid.cbSize = sizeof(g_nid);
     g_nid.hWnd = g_hMainWnd;

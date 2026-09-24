@@ -11,8 +11,8 @@ minute) as a proper background tray app with persistent settings.
 
 - Runs entirely in the system tray, no visible window, no taskbar icon.
 - Tray context menu: status, start/stop, settings, exit.
-- Settings dialog (persisted in `HKCU\Software\PioneerRD\KeepAwake`):
-  - Start automatically with Windows (registers itself in the `Run` key).
+- Settings dialog (persisted in `%APPDATA%\KeepAwake\settings.ini`, no registry involved):
+  - Start automatically with Windows (creates a shortcut in the Startup folder).
   - Start minimized to tray.
   - Also keep the display on (`ES_DISPLAY_REQUIRED`).
   - Duration: either "N hours after start" or "until HH:MM".
@@ -32,6 +32,7 @@ Produces `KeepAwake.exe` (statically linked, no extra DLLs required).
 
 ## Autostart
 
-Enable "Automatisch mit Windows starten" in the settings dialog; this writes
-`HKCU\Software\Microsoft\Windows\CurrentVersion\Run\KeepAwake` pointing at
-the current executable path.
+Enable "Automatisch mit Windows starten" in the settings dialog; this creates
+`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\KeepAwake.lnk`
+pointing at the current executable path. Unchecking it removes the shortcut
+again. No registry access or elevated rights required.
